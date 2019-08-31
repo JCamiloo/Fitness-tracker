@@ -9,9 +9,7 @@ export class AuthService {
     authChange = new Subject<boolean>();
     private user: User;
 
-    constructor(private router: Router){
-
-    }
+    constructor(private router: Router){}
 
     registerUser(authData: AuthData){
         this.user = {
@@ -40,7 +38,7 @@ export class AuthService {
     }
 
     isAuth(){
-        return this.user !== null;
+        return this.user != null;
     }
 
     private authSuccessfully(){
