@@ -8,6 +8,7 @@ import { TrainingService } from '../training.service';
   templateUrl: './past-trainings.component.html',
   styleUrls: ['./past-trainings.component.css']
 })
+
 export class PastTrainingsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
@@ -22,5 +23,9 @@ export class PastTrainingsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(){
     this.dataSource.sort = this.sort;
+  }
+
+  doFilter(filterValue: string){
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
