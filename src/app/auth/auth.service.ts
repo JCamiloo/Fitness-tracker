@@ -1,9 +1,11 @@
+import { UIService } from './../shared/ui.service';
 import { Subject } from 'rxjs/Subject';
 import { User, AuthData } from './auth.interfaces';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth'
 import { TrainingService } from '../training/training.service';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +14,8 @@ export class AuthService {
     private isAuthenticated = false;
 
     constructor(private router: Router, private afAuth: AngularFireAuth,
-                private trainingSrv: TrainingService ){}
+                private trainingSrv: TrainingService, private snackBar: MatSnackBar,
+                private UISrv: UIService){}
     
     initAuthListener(){
         this.afAuth.authState.subscribe(user => {
@@ -30,17 +33,33 @@ export class AuthService {
     }
 
     registerUser(authData: AuthData){
+        this.UISrv.loadingStateChanged.next(true);
         this.afAuth.auth.createUserWithEmailAndPassword(
             authData.email,
             authData.password
-        ).catch(error => console.log(error));
+        ).then(result => {
+            this.UISrv.loadingStateChanged.next(false);
+        }).catch(error => {
+            this.UISrv.loadingStateChanged.next(false);
+            this.snackBar.open(error.message, null, {
+                duration: 3000
+            });
+        });
     }
 
     login(authData: AuthData){
+        this.UISrv.loadingStateChanged.next(true);
         this.afAuth.auth.signInWithEmailAndPassword(
             authData.email,
             authData.password
-        ).catch(error => console.log(error));
+        ).then(result => {
+            this.UISrv.loadingStateChanged.next(false);
+        }).catch(error => {
+            this.UISrv.loadingStateChanged.next(false);
+            this.snackBar.open(error.message, null, {
+                duration: 3000
+            });
+        });
     }
 
     logout(){
