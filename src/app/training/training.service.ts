@@ -1,10 +1,9 @@
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription'
+import { Subject, Subscription } from 'rxjs';
 import { Exercise } from './training.interfaces';
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
 import { UIService } from '../shared/ui.service';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class TrainingService {
@@ -43,7 +42,7 @@ export class TrainingService {
     
     fetchAvailableExercises(){
         this.UISrv.loadingStateChanged.next(true);
-        this.fbSubs.push(this.db.collection('avalaibleExercises').snapshotChanges().map(docArray => {
+        this.fbSubs.push(this.db.collection('avalaibleExercises').snapshotChanges().pipe(map(docArray => {
             return docArray.map(doc => {
               return {
                 id: doc.payload.doc.id,
@@ -52,7 +51,7 @@ export class TrainingService {
                 calories: doc.payload.doc.data()['calories'],
               }
             });
-        }).subscribe((exercises: Exercise[]) => {
+        })).subscribe((exercises: Exercise[]) => {
             this.UISrv.loadingStateChanged.next(false);
             this.availableExercises = exercises;
             this.exercisesChanged.next([ ...this.availableExercises ]);

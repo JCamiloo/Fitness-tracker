@@ -1,6 +1,6 @@
 import { UIService } from './../shared/ui.service';
-import { Subject } from 'rxjs/Subject';
-import { User, AuthData } from './auth.interfaces';
+import { Subject } from 'rxjs';
+import { AuthData } from './auth.interfaces';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth'
@@ -25,7 +25,6 @@ export class AuthService {
             } else {
                 this.trainingSrv.cancelSubscriptions();
                 this.authChange.next(false);
-                this.router.navigate(['/login']);
                 this.isAuthenticated = false;
             }
         });

@@ -2,7 +2,7 @@ import { Exercise } from './../training.interfaces';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TrainingService } from '../training.service';
 import { NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { UIService } from 'src/app/shared/ui.service';
 
 @Component({
