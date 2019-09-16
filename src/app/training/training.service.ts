@@ -56,7 +56,6 @@ export class TrainingService {
               }
             });
         })).subscribe((exercises: Exercise[]) => {
-            console.log('exercises', exercises);
             this.store.dispatch(new UI.StopLoading());
             this.store.dispatch(new Training.SetAvailableTrainings(exercises));
         }, error => {
@@ -67,7 +66,7 @@ export class TrainingService {
 
     fetchCompletedOrCancelledExercises(){
         this.fbSubs.push(this.db.collection('finishedExercises').valueChanges().subscribe((exercises: Exercise[]) => {
-            this.store.dispatch(new Training.SetAvailableTrainings(exercises));
+            this.store.dispatch(new Training.SetFinishedTrainings(exercises));
         }));
     }
 

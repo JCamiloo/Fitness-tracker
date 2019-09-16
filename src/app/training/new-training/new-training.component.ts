@@ -23,7 +23,6 @@ export class NewTrainingComponent implements OnInit {
   ngOnInit() {
     this.isLoading$ = this.store.select(fromRoot.getIsLoading);
     this.exercises$ = this.store.select(fromTraining.getAvailableExercises);
-    this.store.select(fromTraining.getAvailableExercises).subscribe(data => console.log('data',data));
     this.fetchExercises();
   }
 

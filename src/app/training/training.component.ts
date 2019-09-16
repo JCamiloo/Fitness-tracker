@@ -13,8 +13,7 @@ export class TrainingComponent implements OnInit {
 
   onGoingTraining$: Observable<boolean>;
   
-  constructor(private trainingSrv: TrainingService,
-              private store: Store<fromTraining.State>) { }
+  constructor(private store: Store<fromTraining.State>) { }
 
   ngOnInit() {
     this.onGoingTraining$ = this.store.select(fromTraining.getIsTraining);
