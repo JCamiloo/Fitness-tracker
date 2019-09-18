@@ -16,7 +16,7 @@
                 <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
             </mat-card-content>
 
-            <mat-card-actions fxLayoutAlign="center" *ngIf="!isLoading">
+            <mat-card-actions fxLayoutAlign="center" *ngIf="!(isLoading$ | async)">
                 <button *ngIf="exercises$ | async" mat-button type="submit" color="primary" 
                         [disabled]="form.invalid">
                     Start
